@@ -2,9 +2,9 @@ from django.db import models
 
 
 class House(models.Model):
-    priceUnit=models.IntegerField()
-    priceSum=models.IntegerField()
-
+    price_unit=models.IntegerField(db_column='')
+    price_sum=models.IntegerField()
+    area_size = models
 
 class agent(models.Model):
 
