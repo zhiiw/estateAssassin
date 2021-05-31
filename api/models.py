@@ -17,7 +17,7 @@ class House(models.Model):
 
 
 class HouseOfCase(models.Model):
-    house_id = models.IntegerField(blank=True, null=True)
+    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
     case_type = models.TextField(blank=True, null=True)
     case_id = models.IntegerField(primary_key=True)
 
@@ -27,7 +27,8 @@ class HouseOfCase(models.Model):
 
 
 class Intermediary(models.Model):
-    house_id = models.IntegerField(blank=True, null=True)
+    id = models.AutoField( primary_key=True)
+    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
     intermediary_name = models.TextField(blank=True, null=True)
     phone = models.FloatField(blank=True, null=True)
 
@@ -37,7 +38,8 @@ class Intermediary(models.Model):
 
 
 class LocationOfHouse(models.Model):
-    house_id = models.IntegerField(blank=True, null=True)
+    id = models.AutoField( primary_key=True)
+    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
     area = models.TextField(blank=True, null=True)
     community_name = models.TextField(blank=True, null=True)
     part_area = models.TextField(blank=True, null=True)
