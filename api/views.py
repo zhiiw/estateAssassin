@@ -7,11 +7,13 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 
-from .models import User
+from .models import User,House,HouseOfCase,Intermediary,LocationOfHouse
 
 
 # Create your views here.
-
+@csrf_exempt
+def random(request):
+    house_random  =  House.objects.get()
 @csrf_exempt
 def login(request):
     dic = {}
@@ -55,7 +57,6 @@ def register(request):
         post_content = json.loads(request.body)
         username = post_content['username']
         password = post_content['password']
-        role = post_content['role']
         user = User.objects.get(username=username)
     except (KeyError, json.decoder.JSONDecodeError):
         dic['status'] = "Failed"
@@ -64,7 +65,7 @@ def register(request):
     except User.DoesNotExist:
         dic['status'] = "Success"
         now = datetime.datetime.now()
-        newUser = User(username=username, password=password, role=role, register_time=now)
+        newUser = User(username=username, password=password, register_time=now)
         newUser.save()
         return HttpResponse(json.dumps(dic))
     if user is not None:
