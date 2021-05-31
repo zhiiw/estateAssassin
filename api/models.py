@@ -2,31 +2,61 @@ from django.db import models
 
 
 class House(models.Model):
-    price_unit=models.IntegerField(db_column='')
-    price_sum=models.IntegerField()
-    area_size = models
+    house_id = models.IntegerField(primary_key=True)
+    toward = models.TextField(blank=True, null=True)
+    unit_price = models.IntegerField(blank=True, null=True)
+    building_area = models.FloatField(blank=True, null=True)
+    total_price = models.FloatField(blank=True, null=True)
+    decoration = models.TextField(blank=True, null=True)
+    floor = models.TextField(blank=True, null=True)
+    unit_type = models.TextField(blank=True, null=True)
 
-class agent(models.Model):
+    class Meta:
+        managed = False
+        db_table = 'house'
 
 
-class position(models.Model):
+class HouseOfCase(models.Model):
+    house_id = models.IntegerField(blank=True, null=True)
+    case_type = models.TextField(blank=True, null=True)
+    case_id = models.IntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'house_of_case'
 
 
-class seller(models.Model):
+class Intermediary(models.Model):
+    house_id = models.IntegerField(blank=True, null=True)
+    intermediary_name = models.TextField(blank=True, null=True)
+    phone = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'intermediary'
 
 
-class case(models.Model):
+class LocationOfHouse(models.Model):
+    house_id = models.IntegerField(blank=True, null=True)
+    area = models.TextField(blank=True, null=True)
+    community_name = models.TextField(blank=True, null=True)
+    part_area = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'location_of_house'
+
 
 class User(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    uid = models.AutoField(db_column='UID', primary_key=True)  # Field name made lowercase.
     username = models.CharField(db_column='USERNAME', unique=True, max_length=20)  # Field name made lowercase.
     password = models.CharField(db_column='PASSWORD', max_length=30)  # Field name made lowercase.
     register_time = models.DateField(db_column='REGISTER_TIME')  # Field name made lowercase.
-    role = models.IntegerField(db_column='ROLE')  # Field name made lowercase.
-
+    is_admin= models.IntegerField(db_column='admin',default=0);
     class Meta:
         managed = True
         db_table = 'user'
+
 
 
 # Create your models here.

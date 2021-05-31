@@ -8,8 +8,11 @@ from django.views.decorators.csrf import csrf_exempt
 import datetime
 
 from .models import User
+
+
 # Create your views here.
 
+@csrf_exempt
 def login(request):
     dic = {}
     if request.method == 'GET':
@@ -37,7 +40,7 @@ def login(request):
     else:
         dic['status'] = "Success"
         dic['user_id'] = user.uid
-        dic['user_role'] = user.role
+        dic['is_admin'] = user.is_admin
         return HttpResponse(json.dumps(dic))
 
 
