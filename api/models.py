@@ -27,6 +27,7 @@ class HouseOfCase(models.Model):
 
 
 class Intermediary(models.Model):
+    id = models.AutoField(db_column='UID', primary_key=True)
     house_id = models.IntegerField(blank=True, null=True)
     intermediary_name = models.TextField(blank=True, null=True)
     phone = models.FloatField(blank=True, null=True)
@@ -37,6 +38,7 @@ class Intermediary(models.Model):
 
 
 class LocationOfHouse(models.Model):
+    id = models.AutoField(db_column='UID', primary_key=True)
     house_id = models.IntegerField(blank=True, null=True)
     area = models.TextField(blank=True, null=True)
     community_name = models.TextField(blank=True, null=True)
