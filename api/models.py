@@ -1,6 +1,15 @@
 from django.db import models
 
 
+class Case(models.Model):
+    case_id = models.IntegerField(blank=True, null=True)
+    case_type = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'case'
+
+
 class House(models.Model):
     house_id = models.IntegerField(primary_key=True)
     toward = models.TextField(blank=True, null=True)
@@ -10,25 +19,24 @@ class House(models.Model):
     decoration = models.TextField(blank=True, null=True)
     floor = models.TextField(blank=True, null=True)
     unit_type = models.TextField(blank=True, null=True)
+    admin_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = True
         db_table = 'house'
 
 
-class HouseOfCase(models.Model):
-    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
-    case_type = models.TextField(blank=True, null=True)
-    case_id = models.IntegerField(primary_key=True)
+class HouseCase(models.Model):
+    house = models.ForeignKey(House, models.DO_NOTHING, blank=True, null=True)
+    case_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = True
-        db_table = 'house_of_case'
+        db_table = 'house_case'
 
 
 class Intermediary(models.Model):
-    id = models.AutoField( primary_key=True)
-    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
+    house_id = models.IntegerField(blank=True, null=True)
     intermediary_name = models.TextField(blank=True, null=True)
     phone = models.FloatField(blank=True, null=True)
 
@@ -38,8 +46,7 @@ class Intermediary(models.Model):
 
 
 class LocationOfHouse(models.Model):
-    id = models.AutoField( primary_key=True)
-    house_id = models.ForeignKey('House',on_delete=models.CASCADE)
+    house_id = models.IntegerField(blank=True, null=True)
     area = models.TextField(blank=True, null=True)
     community_name = models.TextField(blank=True, null=True)
     part_area = models.TextField(blank=True, null=True)
@@ -54,11 +61,10 @@ class User(models.Model):
     username = models.CharField(db_column='USERNAME', unique=True, max_length=20)  # Field name made lowercase.
     password = models.CharField(db_column='PASSWORD', max_length=30)  # Field name made lowercase.
     register_time = models.DateField(db_column='REGISTER_TIME')  # Field name made lowercase.
-    is_admin= models.IntegerField(db_column='admin',default=0)
+    is_admin = models.IntegerField(db_column='admin', default=0)
+
     class Meta:
         managed = True
         db_table = 'user'
-
-
 
 # Create your models here.
