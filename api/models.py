@@ -12,7 +12,7 @@ class House(models.Model):
     unit_type = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'house'
 
 
@@ -22,7 +22,7 @@ class HouseOfCase(models.Model):
     case_id = models.IntegerField(primary_key=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'house_of_case'
 
 
@@ -33,7 +33,7 @@ class Intermediary(models.Model):
     phone = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'intermediary'
 
 
@@ -45,7 +45,7 @@ class LocationOfHouse(models.Model):
     part_area = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'location_of_house'
 
 
@@ -54,7 +54,7 @@ class User(models.Model):
     username = models.CharField(db_column='USERNAME', unique=True, max_length=20)  # Field name made lowercase.
     password = models.CharField(db_column='PASSWORD', max_length=30)  # Field name made lowercase.
     register_time = models.DateField(db_column='REGISTER_TIME')  # Field name made lowercase.
-    is_admin= models.IntegerField(db_column='admin',default=0);
+    is_admin= models.IntegerField(db_column='admin',default=0)
     class Meta:
         managed = True
         db_table = 'user'

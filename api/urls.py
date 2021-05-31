@@ -6,5 +6,5 @@ urlpatterns = [
     path('login', views.login),
     path('register', views.register),
     path('random', views.random),
-    path('get_id', views.get_id),
+    path('get_id/<int:id>', views.get_id),
 ]

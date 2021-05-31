@@ -11,49 +11,47 @@ from .models import User, House, HouseOfCase, Intermediary, LocationOfHouse
 
 
 @csrf_exempt
-def get_id(request, houseid):
+def get_id(request, id):
     dic = {}
-    return HttpResponse(json.dumps(dic))
-
     if request.method != 'POST':
         dic['status'] = "Failed"
         dic['message'] = "Wrong Method"
         return HttpResponse(json.dumps(dic))
-
-    house = House.objects.get(house_id=houseid)
     try:
+        house = House.objects.get(house_id=id)
         dic['house_id'] = house.house_id
         dic['toward'] = house.toward
-        dic['unit_price'] = house.brand
+        dic['unit_price'] = house.unit_price
         dic['building_area'] = house.building_area
         dic['total_price'] = house.total_price
         dic['decoration'] = house.decoration
         dic['floor'] = house.floor
         dic['unit_type'] = house.unit_type
-    except house.DoesNotExist:
+    except House.DoesNotExist:
         dic['status'] = "Failed"
         return HttpResponse(json.dumps(dic))
-
-    case_of_house = HouseOfCase.objects.get(house_id=houseid)
     try:
-        dic['case_type'] = case_of_house.case_type
-    except house.DoesNotExist:
+        print("ee\n")
+
+        dic['case_type'] = 'PP'
+
+    except HouseOfCase.DoesNotExist:
         dic['case_type'] = []
 
-    intermediary = Intermediary.objects.get(house_id=houseid)
     try:
+        intermediary = Intermediary.objects.get(house_id=id)
         dic['intermediary_name'] = intermediary.intermediary_name
         dic['phone'] = intermediary.phone
-    except house.DoesNotExist:
+    except Intermediary.DoesNotExist:
         dic['intermediary_name'] = []
         dic['phone'] = []
 
-    location = LocationOfHouse.objects.get(house_id=houseid)
     try:
+        location = LocationOfHouse.objects.get(house_id=id)
         dic['area'] = location.area
         dic['community_name'] = location.community_name
         dic['part_area'] = location.part_area
-    except house.DoesNotExist:
+    except LocationOfHouse.DoesNotExist:
         dic['community_name'] = []
         dic['area'] = []
         dic['part_area'] = []
