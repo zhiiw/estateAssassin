@@ -11,8 +11,10 @@
 
       <q-tabs v-if="loggedIn" align="left">
         <q-route-tab to="/index" exact label="Home" icon="home"/>
-        <q-route-tab to="/page2" label="Page Two"/>
-        <q-route-tab to="/info" label="House info" icon="info"/>
+        <q-route-tab to="/list" exact label="House list" icon="list"/>
+        <q-route-tab to="/info" exact label="House info" icon="info"/>
+        <q-route-tab to="/about" exact label="About us" icon="help"/>
+
         <q-tab label="Logout" @click="onLogout()" icon="logout"></q-tab>
       </q-tabs>
     </q-header>
