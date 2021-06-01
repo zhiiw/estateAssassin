@@ -9,10 +9,10 @@ import datetime
 import random
 from .models import User, House, HouseCase, Intermediary, LocationOfHouse, Case
 
+
 @csrf_exempt
 def get_list(request):
     array = []
-
     if request.method != 'GET':
         dic = {}
         dic['status'] = "Failed"
@@ -31,7 +31,6 @@ def get_list(request):
         dic['unit_type'] = i.unit_type
         array.append(dic)
 
-
     return HttpResponse(json.dumps(array))
 
 
@@ -43,54 +42,68 @@ def create(request):
             dict['status'] = "Failed"
             dict['message'] = "Wrong Method"
             return HttpResponse(json.dumps(dict))
+        print("ee\n")
+
         content = json.loads(request.body)
-        if "house_id" in content:
-            print('sueccss')
-        else:
-            dict['status'] = "Failed"
-            dict['message'] = "please input all value"
-            return HttpResponse(json.dumps(dict))
-        user_id = content['user_id']
-        user = User.objects.get(user_id=user_id)
+        print("ee\n")
+        user_id = int(content['uid'])
+        user = User.objects.get(uid=user_id)
+        print("ee\n")
+
         if user.is_admin != 1:
             dict['status'] = "Failed"
             dict['message'] = "You are not admin"
             return HttpResponse(json.dumps(dict))
-        house_id = content['house_id']
         toward = content['toward']
-        unit_price = content['unit_price']
-        building_area = content['building_area']
-        total_price = content['total_price']
+        unit_price = int(content['unit_price'])
+        building_area = int(content['building_area'])
+        total_price = int(content['total_price'])
+        print("ee\n")
+
         decoration = content['decoration']
         floors = content['floors']
         unit_type = content['unit_type']
+        print("ee\n")
+
         house = House(
-            toward,
-            unit_price,
-            building_area,
-            total_price,
-            decoration,
-            floors,
-            unit_type
+            toward=toward,
+            unit_price=unit_price,
+            building_area=building_area,
+            total_price=total_price,
+            decoration=decoration,
+            floor=floors,
+            unit_type=unit_type,
+            admin_id=1
         )
         house.save()
+        print("ee\n")
+
+        id = house.house_id
+        print(id)
+        print("\n")
         intermediary_name = content['intermediary_name']
-        phone = content['phone']
+        phone = int(content['phone'])
+        print("ee\n")
+
         intermediary = Intermediary(
-            id, intermediary_name, phone
+            house_id=id, intermediary_name=intermediary_name, phone=phone
         )
         intermediary.save()
         area = content['area']
+        print("ee\n")
+
         community_name = content['community_name']
         part_area = content['part_area']
         location = LocationOfHouse(
-            id, area, community_name, part_area
+            house_id=id, area=area, community_name=community_name, part_area=part_area
         )
         location.save()
     except (KeyError, json.decoder.JSONDecodeError):
         dict['status'] = "Failed"
         dict['message'] = "No Input"
 
+    dict['status'] = "Success"
+    dict['message'] = "Create Success"
     return HttpResponse(json.dumps(dict))
 
 
@@ -99,10 +112,10 @@ def delete(request):
     dic = {}
     try:
         content = json.loads(request.body)
-        user_id=content['user_id']
-        id=content['house_id']
-        user=User.objects.get(user_id=user_id)
-        if user.is_admin!=1:
+        user_id = int(content['uid'])
+        id = int(content['house_id'])
+        user = User.objects.get(uid=user_id)
+        if user.is_admin != 1:
             dic['status'] = "Failed"
             dic['message'] = "You are not admin"
             return HttpResponse(json.dumps(dic))

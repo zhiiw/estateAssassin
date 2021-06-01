@@ -11,7 +11,7 @@ class Case(models.Model):
 
 
 class House(models.Model):
-    house_id = models.IntegerField(primary_key=True)
+    house_id = models.AutoField(primary_key=True)
     toward = models.TextField(blank=True, null=True)
     unit_price = models.IntegerField(blank=True, null=True)
     building_area = models.FloatField(blank=True, null=True)
