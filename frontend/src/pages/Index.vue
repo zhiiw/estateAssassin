@@ -49,7 +49,7 @@ export default {
   },
   mounted() {
     let _this = this
-    this.$axios.get('http://192.168.31.115:8000/api/random').then(function (response) {
+    this.$axios.get('http://127.0.0.1:8000/api/random').then(function (response) {
       console.log(response)
       let res = response.data
       _this.random_house_decoration = res.decoration

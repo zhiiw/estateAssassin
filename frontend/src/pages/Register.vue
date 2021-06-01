@@ -57,7 +57,7 @@ export default {
         return
       }
       let _this = this
-      this.$axios.post('http://192.168.31.115:8000/api/register',
+      this.$axios.post('http://127.0.0.1:8000/api/register',
         {
           username: this.username,
           password: this.password

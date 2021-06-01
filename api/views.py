@@ -8,6 +8,57 @@ from django.views.decorators.csrf import csrf_exempt
 import datetime
 import random
 from .models import User, House, HouseCase, Intermediary, LocationOfHouse, Case
+from django.shortcuts import render
+
+
+@csrf_exempt
+def visualization(request):
+    houses = House.objects.all()
+    one = 0
+    two = 0
+    three = 0
+    four = 0
+    five = 0
+    six = 0
+    above = 0
+    listForCircle = []
+    total = 0
+    for house in houses:
+        if house.unit_price < 10000:
+            total += 1
+            one += 1
+        if house.unit_price < 20000:
+            total += 1
+            two += 1
+        if house.unit_price < 30000:
+            total += 1
+            three += 1
+        if house.unit_price < 40000:
+            total += 1
+
+            four += 1
+        if house.unit_price < 50000:
+            total += 1
+
+            five += 1
+        if house.unit_price < 60000:
+            total += 1
+            six += 1
+        else:
+            above += 1
+            total += 1
+
+        print(total)
+        print(one)
+    listForCircle.append(eval("{'name':\"<10000\",'y':" + str(one / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\"<20000\",'y':" + str(two / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\"<30000\",'y':" + str(three / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\"<40000\",'y':" + str(four / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\"<50000\",'y':" + str(five / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\"<60000\",'y':" + str(six / total * 100) + "}"))
+    listForCircle.append(eval("{'name':\">60000\",'y':" + str(above / total * 100) + "}"))
+
+    return render(request, 'dashboard.html', {'Z': listForCircle})
 
 
 @csrf_exempt

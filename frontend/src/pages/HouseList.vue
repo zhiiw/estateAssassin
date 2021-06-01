@@ -275,7 +275,7 @@ export default {
     this.isAdmin = sessionStorage.getItem('role') === '1'
     let _this = this
     this.loading = true
-    this.$axios.get('http://192.168.31.115:8000/api/get_list').then(function (response) {
+    this.$axios.get('http://127.0.0.1:8000/api/get_list').then(function (response) {
       let res = response.data
       for(let i = 0; i < res.length; i++) {
         _this.houses.push(res[i])
@@ -301,7 +301,7 @@ export default {
           this.new_phone = 4001680808
           break;
       }
-      this.$axios.post('http://192.168.31.115:8000/api/create', {
+      this.$axios.post('http://127.0.0.1:8000/api/create', {
         uid: sessionStorage.getItem('user_id'),
         toward: _this.new_house_toward,
         unit_price: _this.new_house_unit_price,
@@ -340,7 +340,7 @@ export default {
     },
     onDelete() {
       let _this = this
-      this.$axios.post('http://192.168.31.115:8000/api/delete', {
+      this.$axios.post('http://127.0.0.1:8000/api/delete', {
         uid: sessionStorage.getItem('user_id'),
         house_id: _this.delete_id
       }).then(function (response) {

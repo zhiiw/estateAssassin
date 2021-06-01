@@ -10,6 +10,7 @@ urlpatterns = [
     path('get_all/<int:id>',views.get_all),
     path('create',views.create),
     path('delete',views.delete),
-    path('get_list',views.get_list)
+    path('get_list',views.get_list),
+    path('visual',views.visualization),
 
 ]

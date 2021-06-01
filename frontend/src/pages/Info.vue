@@ -216,7 +216,7 @@ export default {
     if(this.$route.params.id !== undefined)
       this.id = this.$route.params.id
     let _this = this
-    this.$axios.get('http://192.168.31.115:8000/api/get_id/' + this.id).then(function (response) {
+    this.$axios.get('http://127.0.0.1:8000/api/get_id/' + this.id).then(function (response) {
       let res = response.data
       if(res.status === "Success") {
         _this.toward = res.toward
