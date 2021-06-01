@@ -10,4 +10,5 @@ urlpatterns = [
     path('get_all/<int:id>',views.get_all),
     path('create',views.create),
     path('delete/<int:id>',views.delete),
+    path('get_list',views.get_list)
 ]

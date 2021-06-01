@@ -9,6 +9,31 @@ import datetime
 import random
 from .models import User, House, HouseCase, Intermediary, LocationOfHouse, Case
 
+@csrf_exempt
+def get_list(request):
+    array = []
+
+    if request.method != 'GET':
+        dic = {}
+        dic['status'] = "Failed"
+        dic['message'] = "Wrong Method"
+        return HttpResponse(json.dumps(dic))
+    for i in House.objects.all():
+        house_id = i.house_id
+        dic = {}
+        dic['house_id'] = i.house_id
+        dic['toward'] = i.toward
+        dic['unit_price'] = i.unit_price
+        dic['building_area'] = i.building_area
+        dic['total_price'] = i.total_price
+        dic['decoration'] = i.decoration
+        dic['floors'] = i.floor
+        dic['unit_type'] = i.unit_type
+        array.append(dic)
+
+
+    return HttpResponse(json.dumps(array))
+
 
 @csrf_exempt
 def create(request):
@@ -31,7 +56,7 @@ def create(request):
         building_area = content['building_area']
         total_price = content['total_price']
         decoration = content['decoration']
-        floor = content['floor']
+        floors = content['floors']
         unit_type = content['unit_type']
         house = House(
             toward,
@@ -39,14 +64,10 @@ def create(request):
             building_area,
             total_price,
             decoration,
-            floor,
+            floors,
             unit_type
         )
         house.save()
-        id = house.house_id
-        if content['case_type'] == 0:
-            return  ""
-
         intermediary_name = content['intermediary_name']
         phone = content['phone']
         intermediary = Intermediary(
@@ -105,7 +126,7 @@ def get_id(request, id):
         dic['building_area'] = house.building_area
         dic['total_price'] = house.total_price
         dic['decoration'] = house.decoration
-        dic['floor'] = house.floor
+        dic['floors'] = house.floor
         dic['unit_type'] = house.unit_type
     except House.DoesNotExist:
         dic['status'] = "Failed"
@@ -174,7 +195,7 @@ def get_all(request, id):
         dic['building_area'] = i.building_area
         dic['total_price'] = i.total_price
         dic['decoration'] = i.decoration
-        dic['floor'] = i.floor
+        dic['floors'] = i.floor
         dic['unit_type'] = i.unit_type
 
         try:
