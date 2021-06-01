@@ -9,6 +9,6 @@ urlpatterns = [
     path('get_id/<int:id>', views.get_id),
     path('get_all/<int:id>',views.get_all),
     path('create',views.create),
-    path('delete/<int:id>',views.delete),
+    path('delete',views.delete),
     path('get_list',views.get_list)
 ]

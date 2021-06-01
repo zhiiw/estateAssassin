@@ -50,6 +50,12 @@ def create(request):
             dict['status'] = "Failed"
             dict['message'] = "please input all value"
             return HttpResponse(json.dumps(dict))
+        user_id = content['user_id']
+        user = User.objects.get(user_id=user_id)
+        if user.is_admin != 1:
+            dict['status'] = "Failed"
+            dict['message'] = "You are not admin"
+            return HttpResponse(json.dumps(dict))
         house_id = content['house_id']
         toward = content['toward']
         unit_price = content['unit_price']
@@ -89,9 +95,18 @@ def create(request):
 
 
 @csrf_exempt
-def delete(request, id):
+def delete(request):
     dic = {}
     try:
+        content = json.loads(request.body)
+        user_id=content['user_id']
+        id=content['house_id']
+        user=User.objects.get(user_id=user_id)
+        if user.is_admin!=1:
+            dic['status'] = "Failed"
+            dic['message'] = "You are not admin"
+            return HttpResponse(json.dumps(dic))
+
         house = House.objects.get(house_id=id)
         cases = HouseCase.objects.filter(house=house)
         i = 0
